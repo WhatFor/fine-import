@@ -8,15 +8,8 @@ export default defineConfig({
       entry: path.resolve("src", "src/index.tsx"),
       name: "fine-import",
       fileName: (format) => `fine-import.${format}.js`,
+      base: "https://WhatFor.github.io/fine-import/",
     },
-    // rollupOptions: {
-    //   external: ["react", "react-dom"],
-    //   output: {
-    //     globals: {
-    //       react: "React",
-    //     },
-    //   },
-    // },
   },
   plugins: [react()],
 });
