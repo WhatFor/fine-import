@@ -23,6 +23,7 @@ jobs:
       - name: Install and Build
         run: |
           pnpm run build-storybook
+          touch ./storybook-static/.nojekyll
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@3.6.2
