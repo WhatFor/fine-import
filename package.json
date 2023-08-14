@@ -23,7 +23,7 @@
     "build:esm": "tsc",
     "build:cjs": "tsc --module commonjs --outDir lib/cjs",
     "storybook": "storybook dev -p 6006",
-    "deploy-storybook": "storybook build && gh-pages -d storybook-static"
+    "build-storybook": "storybook build"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "7.2.3",

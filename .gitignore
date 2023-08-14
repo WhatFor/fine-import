@@ -2,6 +2,7 @@ lib/
 logs/
 node_modules/
 .storybook/
+.storybook-static/
 .vscode/
 
 .env
