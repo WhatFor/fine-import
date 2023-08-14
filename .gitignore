@@ -1,3 +1,9 @@
-node_modules/
 lib/
+logs/
+node_modules/
 .storybook/
+.vscode/
+
+.env
+.env.*
+*.log

@@ -2,6 +2,18 @@
   "name": "fine-import",
   "version": "1.0.0",
   "description": "",
+  "keywords": [
+    "react",
+    "file-import",
+    "file-upload"
+  ],
+  "author": "@WhatFor",
+  "license": "MIT",
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/WhatFor/fine-import.git"
+  },
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
   "types": "./lib/esm/index.d.ts",
@@ -12,9 +24,6 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "@storybook/addon-essentials": "7.2.3",
     "@storybook/addon-interactions": "7.2.3",
