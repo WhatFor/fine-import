@@ -1,4 +1,6 @@
 name: Storybook
+permissions:
+  contents: write
 on:
   push:
     branches:
