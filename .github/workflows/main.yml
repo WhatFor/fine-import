@@ -27,6 +27,7 @@ jobs:
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@3.6.2
         with:
+          jekyll: false
           branch: gh-pages
           folder: storybook-static
           
