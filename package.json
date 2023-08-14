@@ -1,0 +1,39 @@
+{
+  "name": "fine-import",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "types": "./lib/esm/index.d.ts",
+  "scripts": {
+    "build": "pnpm run build:esm && pnpm run build:cjs",
+    "build:esm": "tsc",
+    "build:cjs": "tsc --module commonjs --outDir lib/cjs",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@storybook/addon-essentials": "7.2.3",
+    "@storybook/addon-interactions": "7.2.3",
+    "@storybook/addon-links": "7.2.3",
+    "@storybook/addon-onboarding": "1.0.8",
+    "@storybook/blocks": "7.2.3",
+    "@storybook/react": "7.2.3",
+    "@storybook/react-vite": "7.2.3",
+    "@storybook/testing-library": "0.2.0",
+    "@types/react": "^18.2.20",
+    "@types/react-dom": "^18.2.7",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "storybook": "^7.2.3",
+    "typescript": "^5.1.6",
+    "vite": "^4.4.9"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
