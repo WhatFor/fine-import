@@ -1,6 +1,6 @@
 {
   "name": "fine-import",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A React component for importing files that's just about fine.",
   "keywords": [
     "react",
@@ -31,7 +31,7 @@
     "build:cjs": "tsc --module commonjs --outDir lib/cjs",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "npm-publish": "pnpm publish --no-git-checks --access public ./lib"
+    "npm-publish": "pnpm publish --no-git-checks --access public"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "7.2.3",
