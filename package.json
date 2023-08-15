@@ -1,7 +1,7 @@
 {
   "name": "fine-import",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "A React component for importing files that's just about fine.",
   "keywords": [
     "react",
     "file-import",
