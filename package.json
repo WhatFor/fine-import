@@ -1,6 +1,6 @@
 {
   "name": "fine-import",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A React component for importing files that's just about fine.",
   "keywords": [
     "react",
@@ -15,6 +15,9 @@
     "type": "git",
     "url": "https://github.com/WhatFor/fine-import.git"
   },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
   "homepage": "https://WhatFor.github.io/fine-import",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
@@ -25,7 +28,7 @@
     "build:cjs": "tsc --module commonjs --outDir lib/cjs",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "publish": "pnpm publish --no-git-checks"
+    "npm-publish": "pnpm publish --no-git-checks --access public"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "7.2.3",
