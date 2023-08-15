@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "lib/esm",
+    "outDir": "lib",
     "module": "ESNext",
     "target": "es5",
     "jsx": "react",

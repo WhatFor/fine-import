@@ -1,6 +1,6 @@
 {
   "name": "fine-import",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "A React component for importing files that's just about fine.",
   "keywords": [
     "react",
@@ -29,7 +29,8 @@
   "exports": {
     ".": {
       "import": "./lib/fine-import.es.js",
-      "require": "./lib/fine-import.umd.js"
+      "require": "./lib/fine-import.umd.js",
+      "types": "./lib/index.d.ts"
     }
   },
   "scripts": {
