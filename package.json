@@ -1,6 +1,6 @@
 {
   "name": "fine-import",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A React component for importing files that's just about fine.",
   "keywords": [
     "react",
@@ -11,6 +11,9 @@
   "license": "MIT",
   "sideEffects": false,
   "packageManager": "pnpm@7.26.0",
+  "files": [
+    "lib"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/WhatFor/fine-import.git"

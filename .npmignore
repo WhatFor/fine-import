@@ -1,0 +1,10 @@
+logs/
+node_modules/
+.storybook-static/
+.vscode/
+.github/
+.storybook/
+
+.env
+.env.*
+*.log
