@@ -24,7 +24,8 @@
     "build:esm": "tsc",
     "build:cjs": "tsc --module commonjs --outDir lib/cjs",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "publish": "pnpm publish"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "7.2.3",
