@@ -1,6 +1,6 @@
 {
   "name": "fine-import",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "A React component for importing files that's just about fine.",
   "keywords": [
     "react",
@@ -12,7 +12,8 @@
   "sideEffects": false,
   "packageManager": "pnpm@7.26.0",
   "files": [
-    "lib"
+    "lib",
+    "README.md"
   ],
   "repository": {
     "type": "git",
@@ -22,9 +23,15 @@
     "registry": "https://registry.npmjs.org"
   },
   "homepage": "https://WhatFor.github.io/fine-import",
-  "main": "./lib/cjs/index.js",
-  "module": "./lib/esm/index.js",
-  "types": "./lib/esm/index.d.ts",
+  "main": "./lib/fine-import.umd.js",
+  "module": "./lib/fine-import.es.js",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./lib/fine-import.es.js",
+      "require": "./lib/fine-import.umd.js"
+    }
+  },
   "scripts": {
     "build": "vite build --outDir lib",
     "storybook": "storybook dev -p 6006",

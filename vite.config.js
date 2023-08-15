@@ -3,17 +3,18 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import dts from "vite-plugin-dts";
 
+import * as packageJson from "./package.json";
+
 export default defineConfig({
   build: {
     lib: {
       entry: path.resolve("src/index.tsx"),
       name: "fine-import",
-      formats: ["es", "umd"],
       fileName: (format) => `fine-import.${format}.js`,
       base: "https://WhatFor.github.io/fine-import/",
     },
     rollupOptions: {
-      external: ["react", "tailwindcss"],
+      external: [...Object.keys(packageJson.peerDependencies)],
       output: {
         globals: {
           react: "React",
