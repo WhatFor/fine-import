@@ -9,4 +9,8 @@ const meta: Meta<typeof SayHello> = {
 export default meta;
 type Story = StoryObj<typeof SayHello>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  args: {
+    name: "You",
+  },
+};

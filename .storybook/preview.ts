@@ -1,3 +1,4 @@
+import "../tailwind.shim.css";
 import type { Preview } from "@storybook/react";
 
 const preview: Preview = {
