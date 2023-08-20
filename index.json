@@ -1,1 +1,1 @@
-{"v":4,"entries":{"components-sayhello--default":{"id":"components-sayhello--default","title":"Components/SayHello","name":"Default","importPath":"./src/SayHello.stories.tsx","tags":["story"],"type":"story"}}}
+{"v":4,"entries":{"table--default":{"id":"table--default","title":"Table","name":"Default","importPath":"./src/index.stories.tsx","tags":["story"],"type":"story"}}}
