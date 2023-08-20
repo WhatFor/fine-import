@@ -14,6 +14,7 @@ specifiers:
   autoprefixer: ^10.4.15
   babel-core: ^6.26.3
   babel-runtime: ^6.26.0
+  papaparse: ^5.4.1
   postcss: ^8.4.27
   react: ^18.2.0
   react-dom: ^18.2.0
@@ -25,6 +26,9 @@ specifiers:
   typescript: ^5.1.6
   vite: ^4.4.9
   vite-plugin-dts: ^3.5.2
+
+dependencies:
+  papaparse: 5.4.1
 
 devDependencies:
   '@storybook/addon-essentials': 7.2.3_gltvt74xzh7f5lvw2hzxriz5bu
@@ -6806,6 +6810,10 @@ packages:
   /pako/0.2.9:
     resolution: {integrity: sha512-NUcwaKxUxWrZLpDG+z/xZaCgQITkA/Dv4V/T6bw7VON6l1Xz/VnrBqrYjZQ12TamKHzITTfOEIYUj48y2KXImA==}
     dev: true
+
+  /papaparse/5.4.1:
+    resolution: {integrity: sha512-HipMsgJkZu8br23pW15uvo6sib6wne/4woLZPlFf3rpDyMe9ywEXUsuD7+6K9PRkJlVT51j/sCOYDKGGS3ZJrw==}
+    dev: false
 
   /parent-module/1.0.1:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==}
