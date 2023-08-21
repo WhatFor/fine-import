@@ -26,9 +26,11 @@ specifiers:
   typescript: ^5.1.6
   vite: ^4.4.9
   vite-plugin-dts: ^3.5.2
+  xlsx: https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz
 
 dependencies:
   papaparse: 5.4.1
+  xlsx: '@cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz'
 
 devDependencies:
   '@storybook/addon-essentials': 7.2.3_gltvt74xzh7f5lvw2hzxriz5bu
@@ -8742,3 +8744,11 @@ packages:
     optionalDependencies:
       commander: 9.5.0
     dev: true
+
+  '@cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz':
+    resolution: {tarball: https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz}
+    name: xlsx
+    version: 0.20.0
+    engines: {node: '>=0.8'}
+    hasBin: true
+    dev: false

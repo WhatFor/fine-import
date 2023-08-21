@@ -5,7 +5,10 @@ import {
   useEffect,
   useState,
 } from "react";
+
 import { parse } from "papaparse";
+import { read, utils } from "xlsx";
+import { getFileType } from "./utils/file";
 
 interface BaseProps {
   className?: string;
@@ -32,15 +35,15 @@ let FineUploadContext = createContext<FineUploadContextState>({
   previewData: [],
 });
 
+// todo: this type sucks - can we get rid of it?
 interface TableRootProps extends Omit<BaseProps, "children"> {
   cool?: boolean;
-  // todo: type
+  // todo: type?
   children: (row: any) => ReactNode;
 }
 
 const TableRoot = (props: TableRootProps) => {
   const { stage, previewData } = useContext(FineUploadContext);
-  console.log("data in table:", previewData);
 
   if (stage === Stage.Initial) {
     return <></>;
@@ -98,13 +101,23 @@ const Uploader = (props: UploaderProps) => {
   );
 };
 
-interface FineUploadProps extends BaseProps {}
+interface Config {
+  [key: string]: {
+    required: boolean;
+  };
+}
 
-const FineUploadRoot = <TImport,>(props: FineUploadProps) => {
+interface FineUploadProps extends BaseProps {
+  config: Config;
+}
+
+const FineUploadRoot = (props: FineUploadProps) => {
   const [stage, setStage] = useState(Stage.Initial);
   const [rawFile, setRawFile] = useState<File | null>(null);
 
-  // todo: type
+  const desiredHeaders = Object.keys(props.config);
+
+  // todo: type?
   const [data, setData] = useState<any[]>([]);
 
   const initialiseFile = (file: File) => {
@@ -113,16 +126,91 @@ const FineUploadRoot = <TImport,>(props: FineUploadProps) => {
     setRawFile(file);
   };
 
-  useEffect(() => {
-    if (!rawFile) {
-      return;
+  // todo: notes from past me.
+  // Ideally we want to guide the user through the process of uploading a file.
+  // This includes sorting out their terrible headers.
+  // What this really means for us is,
+  //  - the dev specifies the type they want the file in - this is keys on config.
+  //  - we parse the file and find the headers they've given us.
+  //  - at this point, we need to check they match.
+  //     - if they do exactly, we can all go on with our lives and be happy.
+  //     - if they don't match, there's a few scenarios we could handle:
+  //      - case is wrong. this is easy to fix and we can do that.
+  //      - spacing is bad. again, we can fix.
+  //            - maybe we just trim all kinds of whitespace, understores, etc.
+  //      - the headers are out of order. should not break anything.
+  //      - we expect something, but it's not found. We tell the user this.
+  //         - they either realise they've made a mistkae, fix their file, retry.
+  //         - or we can go through each failed heading and ask them to map.
+  //            - e.g. "Hey we expected a 'Name' column but couldn't find it."
+  //                   "Can you select which colum is 'Name' in your file?"
+  //     - ultimately what we're doing is finding a direct 1:1 map
+  //       of all cols in their file to the type specified.
+  //       once that's done, we can transform their file into the specified format
+  //       with the corect headers and pump it out as json.
+
+  // more thoughts:
+  //  - We probably don't want to actually parse the imported file and 'apply'
+  //    the fixes where possible. Instead, we just post the blob file
+  //    as is, and post the mapping object to the server.
+  //    This keeps processing slim on the client, and can write some cute
+  //    client libs for the server in various languages to 'apply' the mapping.
+
+  const autoResolveMatchingHeader = (
+    importedHeader: string,
+    desiredHeaders: string[]
+  ) => {
+    // todo: refactor
+
+    // simple direct comparison:
+    if (desiredHeaders.includes(importedHeader)) {
+      return importedHeader;
     }
 
+    // differing case:
+    const lowerCaseHeaders = desiredHeaders.map((header) =>
+      header.toLocaleLowerCase()
+    );
+    const lowerCaseImportedHeader = importedHeader.toLocaleLowerCase();
+    if (lowerCaseHeaders.includes(lowerCaseImportedHeader)) {
+      return desiredHeaders[lowerCaseHeaders.indexOf(lowerCaseImportedHeader)];
+    }
+  };
+
+  const parseCsv = () => {
     parse(rawFile, {
       // todo: can we type the results?
       // todo: types
-      complete: (results: { data: any[]; errors: any[]; meta: any }) => {
-        setData(results.data);
+      complete: (results: { data: string[][]; errors: any[]; meta: any }) => {
+        const importedHeaders = results.data[0];
+        results.data.shift();
+
+        // todo: this is probably wrong.
+        // we're modifying the imported data, which idk if we want to do.
+        // we probs just want to keep it as is, and figure out a mapping
+        // to the desired headers.
+        const objData = results.data.map((row) => {
+          const obj: { [key: string]: string } = {};
+
+          row.forEach((cell, index) => {
+            const header = importedHeaders[index];
+            const desiredHeader = autoResolveMatchingHeader(
+              header,
+              desiredHeaders
+            );
+
+            // todo: desiredHeader should probably handle missing headers?
+            // this kinda blows up if we don't find a match.
+
+            if (desiredHeader) {
+              obj[desiredHeader] = cell;
+            }
+          });
+
+          return obj;
+        });
+
+        setData(objData);
         setStage(Stage.Completed);
       },
       error: (
@@ -132,6 +220,52 @@ const FineUploadRoot = <TImport,>(props: FineUploadProps) => {
         setStage(Stage.Failed);
       },
     });
+  };
+
+  const parseXlsx = async () => {
+    const buffer = await rawFile.arrayBuffer();
+    const wb = read(buffer);
+    const firstSheet = wb.Sheets[wb.SheetNames[0]];
+
+    const data = utils.sheet_to_json(firstSheet, {
+      skipHidden: true,
+      blankrows: false,
+    });
+
+    // convert all keys to lowercase - this is temporary for now
+    // until we can handle case sensitivity automatically.
+    data.forEach((row) => {
+      Object.keys(row).forEach((key) => {
+        const lowerCaseKey = key.toLocaleLowerCase();
+        if (lowerCaseKey !== key) {
+          row[lowerCaseKey] = row[key];
+          delete row[key];
+        }
+      });
+    });
+
+    setData(data);
+    setStage(Stage.Completed);
+  };
+
+  useEffect(() => {
+    if (!rawFile) {
+      return;
+    }
+
+    const fileType = getFileType(rawFile);
+
+    switch (fileType) {
+      case "csv":
+        parseCsv();
+        break;
+      case "xlsx":
+        parseXlsx();
+        break;
+      default:
+        // todo: error
+        setStage(Stage.Failed);
+    }
   }, [rawFile]);
 
   return (
