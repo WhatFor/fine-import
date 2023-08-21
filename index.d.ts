@@ -11,9 +11,15 @@ interface HeaderProps extends BaseProps {
 }
 interface UploaderProps extends BaseProps {
 }
-interface FineUploadProps extends BaseProps {
+interface Config {
+    [key: string]: {
+        required: boolean;
+    };
 }
-export declare let FineUpload: (<TImport>(props: FineUploadProps) => import("react/jsx-runtime").JSX.Element) & {
+interface FineUploadProps extends BaseProps {
+    config: Config;
+}
+export declare let FineUpload: ((props: FineUploadProps) => import("react/jsx-runtime").JSX.Element) & {
     Table: ((props: TableRootProps) => import("react/jsx-runtime").JSX.Element) & {
         Header: (props: HeaderProps) => import("react/jsx-runtime").JSX.Element;
     };
